@@ -30,3 +30,33 @@ prototype称之为对象的原型,但是null对象没有。它和另外一个对
 注意一个点  arguments虽然可以像数组一样使用，但它并不是数组。
 
 详细的属性就不说了，总体来说关键字 重载 映射
+
+### 4、javascript里面 this中 call与apply的区别
+这两个方法的目的都是一样的，都是为了改变this的指向。通俗一点的说法就是一个对象调用另一个对象的方法。
+这两个的不同点首先体现在参数上面，一个以参数形式进行传递，一个以数组形式进行传递。当参数比较少的时候,两者方法是差不多的。
+apply中有arguments对象的传参，参数数量不定
+call方法需要手动传入制定参数
+
+##### 举个例子
+```
+function fengtimo(name,age){
+    this.name=name;
+    this.age=age;
+}
+function dazhuti(name,age){
+    fengtimo.apply(this,arguments);
+    //或者 fengtimo.call(this,name,age)
+}
+var me =new dazhuti("dalao",18);
+console.log(me)  //输出dalao 18 
+```
+
+### 5、解释一下ES6中的迭代器
+在ES6中，在数组对象里面的原型__proto__里面增加了Symbol的iterator方法。
+原型对象中增加了这个方法
+###### Symbol(Symbol.iterator): ƒ values()
+里面有包含了一个函数，叫next()函数;
+
+第一次调用next函数,指针指向下标0，第二次调用时，下标指向1。当数组遍历完之后，如再调用，输出的值就是undenfined
+
+#####这个是内置对象中增加的方法，实际上我们像平时数组遍历即可。
